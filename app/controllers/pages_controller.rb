@@ -15,17 +15,24 @@ class PagesController < ApplicationController
   end
 
   def kitten
-end
+  end
 
-def kittens
-end
+  def kittens
+  end
 
-def set_kitten_url
+  def set_kitten_url
   requested_size = params[:size]
   @kitten_url = "http://lorempixel.com/#{requested_size}/#{requested_size}/cats"
-end
+  end
 
-def secrets
-  flash[:alert] = "Sorry, you're not authorized to see that page!"
+  def secrets
+    if params[:magic_word] == nil
+      render :secrets
+  elsif params[:magic_word] == 'magic'
+    render :secrets
+  elsif params[:magic_word] != 'magic'
+  flash.now[:alert] = "Sorry, you're not authorized to see that page!"
+  render :welcome
+  end
 end
 end
